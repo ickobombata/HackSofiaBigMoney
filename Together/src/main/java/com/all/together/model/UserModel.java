@@ -3,8 +3,12 @@ package com.all.together.model;
 import java.sql.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -46,6 +50,21 @@ public class UserModel extends AbstractPersistentObject{
 		@Column(name = "adress")
 		private String addres;
 
+		@OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "id")
+		private CompanyModel company;
+		
+		@OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "id")
+		private NaturalPerson person;
+
+		public  CompanyModel getCompany(){
+			return company;
+		}
+		
+		public NaturalPerson getPreson(){
+			return this.person;
+		}
 		public Long getId() {
 			return id;
 		}

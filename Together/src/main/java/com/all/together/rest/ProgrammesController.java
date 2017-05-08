@@ -13,7 +13,7 @@ import com.all.together.dao.ProgrammesRepository;
 import com.all.together.model.ProgrammesModel;
 
 @RestController
-@RequestMapping(value="/programmes")
+@RequestMapping(value="/programs")
 public class ProgrammesController {
 
 	private ProgrammesRepository companyRepo;

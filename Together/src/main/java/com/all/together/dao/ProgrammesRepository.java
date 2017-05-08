@@ -5,7 +5,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.all.together.model.ProgrammesModel;
 
-@RepositoryRestResource(path = "programmes")
+@RepositoryRestResource(path = "programs")
 public interface ProgrammesRepository extends CrudRepository<ProgrammesModel, Long> {
 
 }

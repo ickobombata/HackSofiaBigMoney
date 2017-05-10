@@ -13,5 +13,5 @@ import com.all.together.model.UserModel;
 public interface UserRepository extends CrudRepository<UserModel, Long>{
    
    @Query("SELECT u.id  FROM UserModel u WHERE u.name = :name")
-   public Optional<Long> getUserName(@Param("name") String name);
+   public Optional<Long> getUserId(@Param("name") String name);
 }

@@ -17,6 +17,7 @@ import com.all.together.model.UserModel;
 import com.all.together.util.JavaUtil;
 import com.all.together.util.SessionUtil;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -29,7 +30,7 @@ public class UserController {
    public UserController(UserRepository userRepo) {
       super();
       this.userRepo = userRepo;
-      _gson = new Gson();
+      _gson = new GsonBuilder().setDateFormat("dd-mm-yyyy").create();
    }
 
    @RequestMapping(method = RequestMethod.GET)
@@ -38,10 +39,16 @@ public class UserController {
             HttpStatus.OK);
    }
 
-   @RequestMapping(value = "/signup")
+   @RequestMapping(value = "/signup", method = RequestMethod.GET)
    public ResponseEntity<UserModel> signUp(
-         @RequestParam(value = "data", required = true) String userData) {
-      UserModel user = _gson.fromJson(userData, UserModel.class);
+         @RequestParam(value = "data", required = true) String data) {
+      UserModel user = _gson.fromJson(data, UserModel.class);
+      
+      UserModel exists = userRepo.findOne(user.getId());
+
+      if(exists != null) {
+         return new ResponseEntity<>(null, HttpStatus.OK);
+      }
       userRepo.save(user);
       return new ResponseEntity<>(user, HttpStatus.OK); // we should return
                                                         // Logged in Home page.
@@ -53,7 +60,7 @@ public class UserController {
       HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
       String username = userData.get("username");
 
-      Long foundUserId = userRepo.getUserName(username).get();
+      Long foundUserId = userRepo.getUserId(username).get();
       if(foundUserId == null) {
          return new ResponseEntity<>(null, HttpStatus.OK);
       }
@@ -73,6 +80,20 @@ public class UserController {
       return new ResponseEntity<>("good", HttpStatus.OK); // return landing page
    }
 
+   @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+   public ResponseEntity<UserModel> getUserInfo(
+         @RequestParam(value = "data", required = true) String data) {
+      HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
+      String username = userData.get("username");
+      
+      Long foundUserId = userRepo.getUserId(username).get();
+      if(foundUserId == null) {
+         return new ResponseEntity<>(null, HttpStatus.OK);
+      }
+      UserModel userResult = userRepo.findOne(foundUserId);
+      return new ResponseEntity<>(userResult, HttpStatus.OK);
+   }
+   
    @RequestMapping(value = "/index")
    public String index() {
       return "INDEX PAGE";

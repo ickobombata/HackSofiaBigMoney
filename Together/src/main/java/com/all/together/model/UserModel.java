@@ -1,13 +1,16 @@
 package com.all.together.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -18,11 +21,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "user", schema="public")
 @XmlRootElement
-public class UserModel extends AbstractPersistentObject{
+public class UserModel implements Serializable{
 
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Basic(optional = false)
 		@NotNull
-		@Size(min = 1, max = 2147483647)
 		@Column(name = "id")
 		private Long id;
 	  
@@ -51,12 +55,12 @@ public class UserModel extends AbstractPersistentObject{
 		private String addres;
 
 		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "id")
-		private CompanyModel company;
+		@JoinColumn(name = "company_id", referencedColumnName="id")
+		private transient CompanyModel company;
 		
 		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "id")
-		private NaturalPerson person;
+		@JoinColumn(name = "person_id", referencedColumnName="id")
+		private transient NaturalPerson person;
 
 		public  CompanyModel getCompany(){
 			return company;
@@ -65,6 +69,15 @@ public class UserModel extends AbstractPersistentObject{
 		public NaturalPerson getPreson(){
 			return this.person;
 		}
+		
+		public void setCompany(CompanyModel company) {
+         this.company = company;
+      }
+		
+		public void setPerson(NaturalPerson person) {
+         this.person = person;
+      }
+		
 		public Long getId() {
 			return id;
 		}

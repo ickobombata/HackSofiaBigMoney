@@ -1,0 +1,41 @@
+#home_jumbotron {
+    background-image: url("../../../assets/images/home/pexels-photo-89873.jpeg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 420px;
+    border: 1px solid deepskyblue;
+}
+
+
+#home_jumbotron_content {
+    padding-top: 15em;
+    font-weight: bold;
+    color: white;
+}
+
+#headline_text {
+    background-color: rgb(0,0,50);
+    background-color: rgba(0,0,50, 0.8);
+    font-size: 48px;
+}
+
+
+#join_button {
+    margin-top: 1em;
+    border-radius: 0;
+    border: 1px solid white;
+}
+
+.home-button-row {
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+#scholarships_button {
+    border-radius: 0;
+}
+
+#programs_button {
+    border-radius: 0;
+}

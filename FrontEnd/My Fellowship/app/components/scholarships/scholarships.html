@@ -1,0 +1,52 @@
+<div>
+    <h1 align="center">Scholarships</h1>
+    <hr/>
+
+    <div>
+        <div style="display:inline-block; width: 200px; border-radius:10px" title="Search">
+            <div class="input-group input-group">
+                <span class="input-group-addon" id="quick-filter" style="border-top-left-radius:10em; border-bottom-left-radius:10em;"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search scholarships" aria-describedby="quick-filter" style="border-top-right-radius:10em; border-bottom-right-radius:10em;" ng-model="scholarshipFilterText">
+            </div>
+        </div>
+
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-success" ng-click="toggleAll()">All</button>
+            <button type="button" class="btn btn-success" ng-click="toggleRelevant()">Relevant to me</button>
+            <button type="button" class="btn btn-success" ng-click="toggleWatched()">Watched</button>
+        </div>
+    </div>
+
+    <br/>
+
+    <!-- <h1 align="center">No scholarships currently available.</h1> -->
+
+    <table id="scholarships_table" class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Days left</th>
+                <th>Deadline</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="scholarship in scholarships | filter:scholarshipFilterText | isRelevant:this | isWatched:this" ng-click="selectScholarship()">
+                <td><b>{{scholarship.name}}</b></td>
+                <td><i>{{calculateDaysLeft(scholarship.deadline)}}</i></td>
+                <td><i>{{scholarship.deadline}}</i></td>
+                <td>
+                    <span ng-show="scholarship.isRelevant" class="glyphicon glyphicon-certificate" style="color: orange"></span>
+                </td>
+                <td>
+                    <span ng-show="scholarship.isWatched" class="glyphicon glyphicon-flag" style="color: red"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <br/>
+</div>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="myApp" >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+    <title>My Fellowship</title>
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/timer.css">
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div id="header" ng-include="'app/shared/header/header.html'"></div>
+
+
+        <div ng-view style="padding-top: 4em"></div>
+
+        <hr/>
+        <div id="footer" ng-include="'app/shared/footer/footer.html'"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="assets/js/angular.min.js"></script>
+    <script src="assets/js/angular-route.js"></script>
+    <script src="assets/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="app/app.module.js"></script>
+    <script src="app/app.routes.js"></script>
+    <script src="app/app.filters.js"></script>
+
+    <script src="app/components/scholarships/scholarshipController.js"></script>
+    <script src="app/components/scholarships/scholarshipsController.js"></script>
+    <script src="app/components/programs/programsController.js"></script>
+    <script src="app/components/watched/watchedController.js"></script>
+    <script src="app/components/signup/signupController.js"></script>
+
+</body>
+</html>

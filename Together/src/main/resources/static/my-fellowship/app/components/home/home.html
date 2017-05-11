@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="app/components/home/home.css">
+
+<div>
+    <div id="home_jumbotron" class="jumbotron">
+        <div id="home_jumbotron_content" class="container for-about">
+            <h1><span id="headline_text">Never miss an opportunity!</span></h1>
+            <button id="join_button" type="button" class="btn btn-lg btn-primary" ng-show="!isUserLoggedIn" ng-click="openSignup()">Join for free</button>
+        </div>
+    </div>
+
+    <div class="home-button-row">
+        <a href="#!/scholarships" id="scholarships_button" type="button" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-education"></span> Scholarships</a>
+        <span style="margin-left: 0.5em; margin-right: 0.5em;"></span>
+        <a href="#!/programs" id="programs_button" type="button" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-list-alt"></span> Programs</a>
+    </div>
+</div>

@@ -3,6 +3,7 @@ package com.all.together.rest;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,9 @@ public class UserController {
    private UserRepository userRepo;
    private Gson _gson;
 
+   private static final String COMPANY_USER="company";
+   private static final String NATURAL_USER="natural";
+   
    @Autowired
    public UserController(UserRepository userRepo) {
       super();
@@ -42,13 +46,32 @@ public class UserController {
    @RequestMapping(value = "/signup", method = RequestMethod.GET, produces = "application/json")
    public ResponseEntity<UserModel> signUp(
          @RequestParam(value = "data", required = true) String data) {
-      UserModel user = _gson.fromJson(data, UserModel.class);
+      HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
+      String username = userData.get("username");
+      String password = userData.get("password");
+      String type = userData.get("type");
       
+<<<<<<< HEAD
+      Optional<Long> userId = userRepo.getUserId(username);
+      if(userId.isPresent()) {
+         return new ResponseEntity<>(null, HttpStatus.OK);
+      }
+      
+      if(type==COMPANY_USER) {
+         
+      } else if(type==NATURAL_USER){
+         
+      } else {
+=======
       UserModel exists = userRepo.findOne(user.getId());
       
       if(exists != null) {
+>>>>>>> b2969f8aa43a572284662d482d8c7f4d2938454f
          return new ResponseEntity<>(null, HttpStatus.OK);
       }
+      UserModel user = new UserModel();
+      user.setName(username);
+     
       userRepo.save(user);
       return new ResponseEntity<>(user, HttpStatus.OK); // we should return
                                                         // Logged in Home page.
@@ -62,6 +85,15 @@ public class UserController {
       String password = userData.get("password");
 
       Long foundUserId = userRepo.getUserId(username).get();
+<<<<<<< HEAD
+      if (foundUserId == null) {
+         return new ResponseEntity<>(null, HttpStatus.OK);
+      }
+
+      SessionUtil.loginUser(username);
+      return new ResponseEntity<>(userRepo.findOne(foundUserId),
+            HttpStatus.OK); // returnning the user data
+=======
       String foundUserPassword = userRepo.getUserPassword(username, password).get();
       if(foundUserId == null) {
          return new ResponseEntity<>(null, HttpStatus.OK);
@@ -78,6 +110,7 @@ public class UserController {
       }
       
       return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+>>>>>>> b2969f8aa43a572284662d482d8c7f4d2938454f
    }
 
    @RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -96,15 +129,15 @@ public class UserController {
          @RequestParam(value = "data", required = true) String data) {
       HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
       String username = userData.get("username");
-      
+
       Long foundUserId = userRepo.getUserId(username).get();
-      if(foundUserId == null) {
+      if (foundUserId == null) {
          return new ResponseEntity<>(null, HttpStatus.OK);
       }
       UserModel userResult = userRepo.findOne(foundUserId);
       return new ResponseEntity<>(userResult, HttpStatus.OK);
    }
-   
+
    @RequestMapping(value = "/index")
    public String index() {
       return "INDEX PAGE";

@@ -11,7 +11,7 @@
         <div style="display:inline-block; width: 200px; border-radius:10px" title="Search">
             <div class="input-group input-group">
                 <span class="input-group-addon" id="quick-filter" style="border-top-left-radius:10em; border-bottom-left-radius:10em;"><i class="glyphicon glyphicon-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search scholarships" aria-describedby="quick-filter" style="border-top-right-radius:10em; border-bottom-right-radius:10em;" ng-model="scholarshipFilterText">
+                <input type="text" class="form-control" placeholder="Search scholarships" aria-describedby="quick-filter" style="border-top-right-radius:10em; border-bottom-right-radius:10em;" ng-model="scholarshipFilterText.name">
             </div>
         </div>
 
@@ -32,8 +32,8 @@
                 <th class="text-center">Name</th>
                 <th class="text-center">Days left</th>
                 <th class="text-center">Deadline</th>
-                <th></th>
-                <th></th>
+                <th class="text-center">Relevant</th>
+                <th class="text-center">Watched</th>
             </tr>
         </thead>
         <tbody class="table-hover">
@@ -42,10 +42,10 @@
                 <td class="text-center"><i>{{calculateDaysLeft(scholarship.endDate)}}</i></td>
                 <td class="text-center"><i>{{scholarship.endDate}}</i></td>
                 <td class="text-center">
-                    <span ng-show="scholarship.isRelevant" class="glyphicon glyphicon-certificate" style="color: orange"></span>
+                    <span ng-show="scholarship.isRelevant && isUserLoggedIn" class="glyphicon glyphicon-certificate" style="color: orange"></span>
                 </td>
                 <td class="text-center">
-                    <span ng-show="scholarship.isWatched" class="glyphicon glyphicon-flag" style="color: red"></span>
+                    <span ng-show="isFollowed(scholarship.id) && isUserLoggedIn" class="glyphicon glyphicon-flag" style="color: red"></span>
                 </td>
             </tr>
         </tbody>

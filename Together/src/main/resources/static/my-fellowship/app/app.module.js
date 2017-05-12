@@ -27,7 +27,11 @@ myApp.run(function ($rootScope, $uibModal) {
 
         return (diffDays >= 0) ? diffDays : "PASSED";
     };
-
+    $rootScope.isFollowed = function (currentScholarshipId){
+        return $rootScope.watchedUserScholarships.some(function(scholarshipId){
+            return scholarshipId == currentScholarshipId;
+        });
+    };
     $rootScope.openSignup = function () {
         $rootScope.signupModal = $uibModal.open({
             templateUrl: "app/authentication/signup/signup.html",

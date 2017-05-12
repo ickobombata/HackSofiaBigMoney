@@ -8,10 +8,13 @@
         <span class="pull-left">{{scholarship.startDate}}</span>
         <span class="pull-right">{{scholarship.endDate}}</span>
         <br/><br/>
-        <button class="btn btn-success pull-right" ng-show="isUserLoggedIn" ng-click="follow()"><i class="glyphicon glyphicon-flag"></i>Follow</button>
+        <button class="btn btn-success pull-right" ng-show="isUserLoggedIn" ng-click="watch()" ng-disabled="isFollowed(scholarship.id)"><i class="glyphicon glyphicon-flag"></i> Follow</button>
     </div>
 
+    <br/><br/>
+
     <div align="center">
+
         <h1>Time left:</h1>
         <div id="clockdiv">
             <div><span class="days"></span><div class="smalltext">Days</div></div>
@@ -20,6 +23,25 @@
             <div><span class="seconds"></span><div class="smalltext">Seconds</div></div>
         </div>
 
+        <h1>Description:</h1>
+        <div class="scholarship-description well well-lg">
+            <br/>
+            <span style="font-size: 24px;">{{scholarship.description}}</span>
+        </div>
+
+        <br/><br/>
+
+        <h1>Requirements:</h1>
+        <div class="scholarship-requirements well well-lg">
+            <br/>
+            <span style="font-size: 24px;">{{scholarship.candidateRequirements}}</span>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-success btn-lg" style="font-size: 36px; font-weight: bold; width: 60%;">Apply</button>
+        </div>
+
     </div>
+
 </div>
 

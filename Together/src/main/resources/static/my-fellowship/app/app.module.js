@@ -2,6 +2,8 @@ var myApp = angular.module("myApp", ["ngRoute", "ui.bootstrap"]);
 
 myApp.run(function ($rootScope, $uibModal) {
     $rootScope.isUserLoggedIn = false;
+    $rootScope.currentUser = null;
+
     $rootScope.scholarships = [
         {name: "EU scholarship 1", deadline: "June 1, 2017", isRelevant: true, isWatched: true},
         {name: "EU scholarship 2", deadline: "June 18, 2017", isRelevant: false, isWatched: false},
@@ -30,6 +32,13 @@ myApp.run(function ($rootScope, $uibModal) {
         $rootScope.signupModal = $uibModal.open({
             templateUrl: "app/components/signup/signup.html",
             controller: "SignupController"
+        });
+    };
+
+    $rootScope.openLogin = function () {
+        $rootScope.loginModal = $uibModal.open({
+            templateUrl: "app/components/login/login.html",
+            controller: "LoginController"
         });
     };
 });

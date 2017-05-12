@@ -7,6 +7,11 @@ Responsive navbar-brand image CSS
 .navbar-brand {
     padding: 0px;
 }
+
+.navbar-default .navbar-brand {
+    color: white;
+}
+
 .navbar-brand>img {
     height: 100%;
     padding: 15px;
@@ -58,10 +63,14 @@ Responsive navbar-brand image CSS
 
 /*  custom ^^^^^ *> */
 
+#navbar9 ul li a {
+    color: white;
+}
+
 #navbar9 ul li a:hover {
     font-weight: bold;
-    background: rebeccapurple;
-    color: white;
+    background: white;
+    color: #0084ff;
 }
 
 #navbar_user_logo {
@@ -71,3 +80,6 @@ Responsive navbar-brand image CSS
     max-width: 17px;
 }
 
+.navbar-default {
+    background: #0084ff;
+}

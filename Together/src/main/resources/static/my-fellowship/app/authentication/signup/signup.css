@@ -24,6 +24,7 @@ input[type="radio"] + span {
     transition: all 0.4s;
     -webkit-transition: all 0.4s;
     display: block;
+    border: 1px solid;
 }
 
 input[type="radio"]:checked + span {

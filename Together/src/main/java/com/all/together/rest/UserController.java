@@ -59,6 +59,7 @@ public class UserController {
       String password = userData.get("password");
       String type = userData.get("type");
       
+
       Optional<Long> userId = userRepo.getUserId(username);
       if(userId.isPresent()) {
          return new ResponseEntity<>(null, HttpStatus.OK);

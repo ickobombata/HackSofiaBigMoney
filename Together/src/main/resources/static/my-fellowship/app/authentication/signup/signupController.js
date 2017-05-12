@@ -10,6 +10,7 @@ myApp.controller("SignupController", function ($scope, $http, $rootScope) {
         $http.get(requestUrl)
             .then(function success(response) {
                 $rootScope.currentUser = response.data;
+                $rootScope.isUserLoggedIn = true;
                 $rootScope.signupModal.close();
             }, function failure(response) {
                 $rootScope.currentUser = null;

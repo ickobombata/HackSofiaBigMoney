@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div>
+    <div class="filter-row">
         <div style="display:inline-block; width: 200px; border-radius:10px" title="Search">
             <div class="input-group input-group">
                 <span class="input-group-addon" id="quick-filter" style="border-top-left-radius:10em; border-bottom-left-radius:10em;"><i class="glyphicon glyphicon-search"></i></span>
@@ -26,31 +26,30 @@
 
     <!-- <h1 align="center">No scholarships currently available.</h1> -->
 
-    <table id="scholarships_table" class="table">
+    <table id="scholarships_table" class="table-fill">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Days left</th>
-                <th>Deadline</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Days left</th>
+                <th class="text-center">Deadline</th>
                 <th></th>
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-hover">
             <tr ng-repeat="scholarship in scholarships | filter:scholarshipFilterText | isRelevant:this | isWatched: this" ng-click="selectScholarship()">
-                <td><b>{{scholarship.name}}</b></td>
-                <td><i>{{calculateDaysLeft(scholarship.endDate)}}</i></td>
-                <td><i>{{scholarship.endDate}}</i></td>
-                <td>
+                <td class="text-left"><b>{{scholarship.name}}</b></td>
+                <td class="text-center"><i>{{calculateDaysLeft(scholarship.endDate)}}</i></td>
+                <td class="text-center"><i>{{scholarship.endDate}}</i></td>
+                <td class="text-center">
                     <span ng-show="scholarship.isRelevant" class="glyphicon glyphicon-certificate" style="color: orange"></span>
                 </td>
-                <td>
+                <td class="text-center">
                     <span ng-show="scholarship.isWatched" class="glyphicon glyphicon-flag" style="color: red"></span>
                 </td>
             </tr>
         </tbody>
     </table>
-
 
 
     <br/>

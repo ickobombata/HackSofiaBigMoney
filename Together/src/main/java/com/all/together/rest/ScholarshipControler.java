@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.all.together.dao.ScholarshipsRepository;
 import com.all.together.model.ScholarshipsModel;
 import com.all.together.model.UserModel;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 @RestController
 @RequestMapping(value = "/scholarships")
 public class ScholarshipControler {
 	private ScholarshipsRepository repo;
+	
+
 	
 	
 	@Autowired
@@ -23,6 +27,7 @@ public class ScholarshipControler {
 		super();
 		// TODO Auto-generated constructor stub
 		this.repo = repos;
+		
 	}
 	
 	   @RequestMapping(method = RequestMethod.GET, produces = "application/json")

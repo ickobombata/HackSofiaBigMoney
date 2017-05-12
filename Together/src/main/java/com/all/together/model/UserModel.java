@@ -35,7 +35,6 @@ public class UserModel implements Serializable{
 		@Column(name = "password")
 		private String password;
 
-
 		@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email") // if
 		@Size(min = 1, max = 2147483647)
 		@Column(name = "email")
@@ -56,16 +55,22 @@ public class UserModel implements Serializable{
 		@Column(name = "adress")
 		private String addres;
 
+		public UserModel() {
+		   this.addres = "default";
+		   this.email = "default@default.com";
+		   this.name = "default";
+		   this.birthday = new Date(0);
+		   this.password = "default";
+		}
+		
 		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "company_id", referencedColumnName="id")
+		@JoinColumn(name = "user_id")
 		private transient CompanyModel company;
 		
 		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "person_id", referencedColumnName="id")
+		@JoinColumn(name = "user_id")
 		private transient NaturalPerson person;
 
-		
-		
 		public String getPassword() {
 			return password;
 		}

@@ -1,21 +1,14 @@
 myApp.filter("isWatched", function () {
     return function (input, scope) {
-        var searchForWatched = false;
-        if(scope == undefined || scope == null) {
-            searchForWatched = true;
-        } else {
-            searchForWatched = scope.onlyWatched;
-        }
-
-        if(searchForWatched) {
-            var watchedArray = [];
+        if(scope.onlyWatched) {
+            var filteredArray = [];
             angular.forEach(input, function (item) {
                 if(item.isWatched) {
-                    watchedArray.push(item);
+                    filteredArray.push(item);
                 }
             });
 
-            return watchedArray;
+            return filteredArray;
         } else {
             return input;
         }
@@ -23,18 +16,31 @@ myApp.filter("isWatched", function () {
 });
 
 myApp.filter("isRelevant", function () {
-    return function (input, scope) {
+    return function(input, scope) {
         if(scope.onlyRelevant) {
-            var relevantArray = [];
+            var filteredArray = [];
             angular.forEach(input, function (item) {
                 if(item.isRelevant) {
-                    relevantArray.push(item);
+                    filteredArray.push(item);
                 }
             });
 
-            return relevantArray;
+            return filteredArray;
         } else {
             return input;
         }
+    }
+});
+
+myApp.filter("programType", function () {
+    return function(input, type) {
+        var filteredArray = [];
+        angular.forEach(input, function (item) {
+            if(item.type == type)  {
+                filteredArray.push(item);
+            }
+        });
+
+        return filteredArray;
     }
 });

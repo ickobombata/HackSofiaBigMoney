@@ -47,7 +47,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="program in programs | filter: programsFilterText | isRelevant:this | isWatched: this">
+            <tr ng-repeat="program in programs | filter: programsFilterText | isRelevant:this | isWatched: this | programType: getProgramFilterType()">
                 <td><b>{{program.name}}</b></td>
                 <td><b>{{calculateDaysLeft(program.end_date)}}</b></td>
                 <td><i>{{program.end_date}}</i></td>

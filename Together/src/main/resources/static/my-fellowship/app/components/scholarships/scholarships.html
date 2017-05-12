@@ -32,7 +32,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="scholarship in scholarships | filter:scholarshipFilterText | isRelevant:this | isWatched:this" ng-click="selectScholarship()">
+            <tr ng-repeat="scholarship in scholarships | filter:scholarshipFilterText | isRelevant:this | isWatched" ng-click="selectScholarship()">
                 <td><b>{{scholarship.name}}</b></td>
                 <td><i>{{calculateDaysLeft(scholarship.deadline)}}</i></td>
                 <td><i>{{scholarship.deadline}}</i></td>

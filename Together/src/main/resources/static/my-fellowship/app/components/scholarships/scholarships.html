@@ -1,6 +1,11 @@
+<link rel="stylesheet" href="app/components/scholarships/scholarships.css">
+
 <div>
-    <h1 align="center">Scholarships</h1>
-    <hr/>
+    <div id="scholarships_jumbotron" class="jumbotron">
+        <div id="scholarships_jumbotron_content" class="container for-about">
+            <h1><span id="headline_text">Scholarships</span></h1>
+        </div>
+    </div>
 
     <div>
         <div style="display:inline-block; width: 200px; border-radius:10px" title="Search">
@@ -32,10 +37,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="scholarship in scholarships | filter:scholarshipFilterText | isRelevant:this | isWatched" ng-click="selectScholarship()">
+            <tr ng-repeat="scholarship in scholarships | filter:scholarshipFilterText | isRelevant:this | isWatched: this" ng-click="selectScholarship()">
                 <td><b>{{scholarship.name}}</b></td>
-                <td><i>{{calculateDaysLeft(scholarship.deadline)}}</i></td>
-                <td><i>{{scholarship.deadline}}</i></td>
+                <td><i>{{calculateDaysLeft(scholarship.endDate)}}</i></td>
+                <td><i>{{scholarship.endDate}}</i></td>
                 <td>
                     <span ng-show="scholarship.isRelevant" class="glyphicon glyphicon-certificate" style="color: orange"></span>
                 </td>

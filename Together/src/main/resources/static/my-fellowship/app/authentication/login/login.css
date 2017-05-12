@@ -1,0 +1,9 @@
+#error_message {
+    color: red;
+    font-weight: bold;
+}
+
+#login_modal_container {
+    color: black;
+    border: 3px solid dodgerblue;
+}

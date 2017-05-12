@@ -35,7 +35,7 @@
                                 <img id="navbar_user_logo" src="assets/images/user/my-avatar.jpeg" alt="User avatar">
                                 Settings <span class="caret"></span>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="settings_buttons">
                                 <div class="dropdown-header">
                                     Signed in as <strong class="css-truncate-target">Nikolay Mateev</strong>
                                 </div>
@@ -46,7 +46,7 @@
                             </ul>
                         </li>
                         <!--<li><a class="navbar-brand" href="#">Profile <span class="glyphicon glyphicon-cog"></span></a></li>-->
-                        <li><a href="" ng-click="isUserLoggedIn = !isUserLoggedIn">Sign out</a></li>
+                        <li><a href="" ng-click="signout()">Sign out</a></li>
                     </ul>
                 </div>
 

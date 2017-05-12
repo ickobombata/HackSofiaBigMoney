@@ -30,16 +30,19 @@ myApp.run(function ($rootScope, $uibModal) {
 
     $rootScope.openSignup = function () {
         $rootScope.signupModal = $uibModal.open({
-            templateUrl: "app/components/signup/signup.html",
+            templateUrl: "app/authentication/signup/signup.html",
             controller: "SignupController"
         });
     };
-
     $rootScope.openLogin = function () {
         $rootScope.loginModal = $uibModal.open({
-            templateUrl: "app/components/login/login.html",
+            templateUrl: "app/authentication/login/login.html",
             controller: "LoginController"
         });
+    };
+    $rootScope.signout = function () {
+        $rootScope.isUserLoggedIn = false;
+        $rootScope.currentUser = null;
     };
 });
 

@@ -1,0 +1,70 @@
+/* =============================================
+* RADIO BUTTONS
+=============================================== */
+
+#radios label {
+    cursor: pointer;
+    position: relative;
+}
+
+#radios label + label {
+    margin-left: 15px;
+}
+
+input[type="radio"] {
+    opacity: 0; /* hidden but still tabable */
+    position: absolute;
+}
+
+input[type="radio"] + span {
+    font-family: 'Material Icons';
+    color: #B3CEFB;
+    border-radius: 50%;
+    padding: 12px;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    display: block;
+}
+
+input[type="radio"]:checked + span {
+    color: #D9E7FD;
+    background-color: #4285F4;
+}
+
+input[type="radio"]:focus + span {
+    color: #fff;
+}
+
+/* ================ TOOLTIPS ================= */
+
+#radios label:hover::before {
+    content: attr(for);
+    font-family: Roboto, -apple-system, sans-serif;
+    text-transform: capitalize;
+    font-size: 10px;
+    position: absolute;
+    top: 5em;
+    left: 0;
+    right: 0;
+    opacity: 0.75;
+    background-color: #323232;
+    color: #fff;
+    width: 6.5em;
+    padding: 4px;
+    border-radius: 3px;
+    display: block;
+}
+
+/* =============================================
+* CENTERING, CONTAINER STYLING ETC || IGNORE
+=============================================== */
+
+#radios {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#signup_modal_container {
+    color: black;
+    border: 3px solid dodgerblue;
+}

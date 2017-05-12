@@ -54,19 +54,30 @@ public class UserController {
                                                         // Logged in Home page.
    }
 
-   @RequestMapping(value = "/login", method = RequestMethod.GET)
+   @RequestMapping(value = "/login" ,produces = "application/json", method = RequestMethod.GET)
    public ResponseEntity<UserModel> login(
          @RequestParam(value = "data", required = true) String data) {
       HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
       String username = userData.get("username");
+      String password = userData.get("password");
 
       Long foundUserId = userRepo.getUserId(username).get();
+      String foundUserPassword = userRepo.getUserPassword(username, password).get();
       if(foundUserId == null) {
          return new ResponseEntity<>(null, HttpStatus.OK);
       }
+      if(foundUserPassword == null) {
+          return new ResponseEntity<>(null, HttpStatus.OK);
+       }
+       
       
       SessionUtil.loginUser(username);
-      return new ResponseEntity<>(userRepo.findOne(foundUserId), HttpStatus.OK); // returnning the user data
+      UserModel foundUser = userRepo.findOne(foundUserId);
+      if(foundUser.getPassword().equals(foundUserPassword)){
+          return new ResponseEntity<>(foundUser, HttpStatus.OK);  // returnning the user data
+      }
+      
+      return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
    }
 
    @RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -80,7 +91,7 @@ public class UserController {
       return new ResponseEntity<>("good", HttpStatus.OK); // return landing page
    }
 
-   @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+   @RequestMapping(value = "/getUserInfo",produces = "application/json", method = RequestMethod.GET)
    public ResponseEntity<UserModel> getUserInfo(
          @RequestParam(value = "data", required = true) String data) {
       HashMap<String, String> userData = JavaUtil.dissasambleJson(data);

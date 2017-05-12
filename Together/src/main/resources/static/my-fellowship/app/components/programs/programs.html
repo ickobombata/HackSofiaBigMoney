@@ -22,7 +22,7 @@
 
         <h2 align="center">{{tableHeading}}</h2>
 
-        <div id="programs_filter_row">
+        <div class="filter-row">
             <div style="display:inline-block; width: 200px; border-radius:10px" title="Search">
                 <div class="input-group input-group">
                     <span class="input-group-addon" id="quick-filter" style="border-top-left-radius:10em; border-bottom-left-radius:10em;"><i class="glyphicon glyphicon-search"></i></span>
@@ -41,25 +41,25 @@
 
         <!-- <h1 align="center">No programs currently available.</h1> -->
 
-        <table id="programs_table" class="table">
+        <table id="programs_table" class="table-fill">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Days left</th>
-                <th>Deadline</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Days left</th>
+                <th class="text-center">Deadline</th>
                 <th></th>
                 <th></th>
             </tr>
             </thead>
-            <tbody>
-            <tr ng-repeat="program in programs | filter: programsFilterText | isRelevant:this | isWatched: this | programType: getProgramFilterType()">
-                <td><b>{{program.name}}</b></td>
-                <td><b>{{calculateDaysLeft(program.end_date)}}</b></td>
-                <td><i>{{program.end_date}}</i></td>
-                <td>
+            <tbody class="table-hover">
+            <tr ng-repeat="program in programs | filter:programsFilterText | isRelevant:this | isWatched: this | programType: getProgramFilterType()" ng-click="selectProgram()">
+                <td class="text-left"><b>{{program.name}}</b></td>
+                <td class="text-center"><i>{{calculateDaysLeft(program.end_date)}}</i></td>
+                <td class="text-center"><i>{{program.end_date}}</i></td>
+                <td class="text-center">
                     <span ng-show="program.isRelevant" class="glyphicon glyphicon-certificate" style="color: orange"></span>
                 </td>
-                <td>
+                <td class="text-center">
                     <span ng-show="program.isWatched" class="glyphicon glyphicon-flag" style="color: red"></span>
                 </td>
             </tr>

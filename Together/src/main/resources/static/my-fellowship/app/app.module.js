@@ -25,12 +25,13 @@ myApp.run(function ($rootScope, $uibModal) {
         var secondDate = new Date(dueDate);
         var diffDays = Math.round((secondDate - firstDate) / oneDay);
 
-        return diffDays;
+        return (diffDays >= 0) ? diffDays : "PASSED";
     };
 
     $rootScope.openSignup = function () {
         $rootScope.signupModal = $uibModal.open({
             templateUrl: "app/authentication/signup/signup.html",
+
             controller: "SignupController"
         });
     };

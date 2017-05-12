@@ -1,0 +1,24 @@
+#programs_jumbotron {
+    background-image: url("../../../assets/images/programs/business-561388_1920.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 360px;
+    border: 1px solid deepskyblue;
+    border-radius: 0;
+}
+
+
+#programs_jumbotron_content {
+    margin-top: -2em;
+    margin-left: -2em;
+    padding-top: 0em;
+    font-weight: bold;
+    color: white;
+}
+
+#headline_text {
+    background-color: rgb(0,0,50);
+    background-color: rgba(0,0,50, 0.8);
+    font-size: 48px;
+}

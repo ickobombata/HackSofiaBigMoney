@@ -1,12 +1,7 @@
 myApp.config(function ($routeProvider) {
     $routeProvider
-        .when("/",
+        .when("/index",
             {
-                templateUrl: "app/components/home/home.html"
-            })
-        .when("/indexSignup",
-            {
-                controller: "HomeController",
                 templateUrl: "app/components/home/home.html"
             })
         .when("/scholarships",
@@ -28,11 +23,6 @@ myApp.config(function ($routeProvider) {
             {
                 controller: "WatchedController",
                 templateUrl: "app/components/watched/watched.html"
-            })
-        .when("/profile",
-            {
-                controller: "ProfileController",
-                templateUrl: "app/components/profile/profile.html"
             })
         .when("/about",
             {

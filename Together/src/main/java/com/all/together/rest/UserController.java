@@ -13,11 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.all.together.dao.CompanyRepository;
-import com.all.together.dao.NaturalPersonRepositiry;
 import com.all.together.dao.UserRepository;
-import com.all.together.model.CompanyModel;
-import com.all.together.model.NaturalPerson;
 import com.all.together.model.UserModel;
 import com.all.together.util.JavaUtil;
 import com.all.together.util.SessionUtil;
@@ -29,19 +25,15 @@ import com.google.gson.GsonBuilder;
 public class UserController {
 
    private UserRepository userRepo;
-   private NaturalPersonRepositiry _naturalRepo;
-   private CompanyRepository _companyRepo;
    private Gson _gson;
 
    private static final String COMPANY_USER="company";
    private static final String NATURAL_USER="natural";
    
    @Autowired
-   public UserController(UserRepository userRepo, CompanyRepository companyRepo, NaturalPersonRepositiry naturalRepo) {
+   public UserController(UserRepository userRepo) {
       super();
       this.userRepo = userRepo;
-      this._companyRepo = companyRepo;
-      this._naturalRepo = naturalRepo;
       _gson = new GsonBuilder().setDateFormat("dd-mm-yyyy").create();
    }
 
@@ -64,18 +56,17 @@ public class UserController {
       if(userId.isPresent()) {
          return new ResponseEntity<>(null, HttpStatus.OK);
       }
-      UserModel user = new UserModel();
-      user.setId(new Long(1500));
-      if(type.equals(COMPANY_USER)) {
-         CompanyModel companyModel = new CompanyModel(user.getId());
-         _companyRepo.save(companyModel);
-      } else if(type.equals(NATURAL_USER)){
-         NaturalPerson naturalPerson = new NaturalPerson(user.getId());
-         _naturalRepo.save(naturalPerson);
+      
+      if(type==COMPANY_USER) {
+         
+      } else if(type==NATURAL_USER){
+         
       } else {
-         throw new IllegalArgumentException("missing type argument");
+         return new ResponseEntity<>(null, HttpStatus.OK);
       }
-
+      UserModel user = new UserModel();
+      user.setName(username);
+     
       userRepo.save(user);
       return new ResponseEntity<>(user, HttpStatus.OK); // we should return
                                                         // Logged in Home page.
@@ -89,28 +80,13 @@ public class UserController {
       String password = userData.get("password");
 
       Long foundUserId = userRepo.getUserId(username).get();
-      
       if (foundUserId == null) {
          return new ResponseEntity<>(null, HttpStatus.OK);
       }
 
-      String foundUserPassword = userRepo.getUserPassword(username, password).get();
-      if(foundUserId == null) {
-         return new ResponseEntity<>(null, HttpStatus.OK);
-      }
-      if(foundUserPassword == null) {
-          return new ResponseEntity<>(null, HttpStatus.OK);
-       }
-       
-      
       SessionUtil.loginUser(username);
-      UserModel foundUser = userRepo.findOne(foundUserId);
-      if(foundUser.getPassword().equals(foundUserPassword)){
-          return new ResponseEntity<>(foundUser, HttpStatus.OK);  // returnning the user data
-      }
-      
-      return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
-
+      return new ResponseEntity<>(userRepo.findOne(foundUserId),
+            HttpStatus.OK); // returnning the user data
    }
 
    @RequestMapping(value = "/logout", method = RequestMethod.GET)

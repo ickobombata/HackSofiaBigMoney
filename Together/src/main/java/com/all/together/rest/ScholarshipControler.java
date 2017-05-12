@@ -25,7 +25,7 @@ public class ScholarshipControler {
 		this.repo = repos;
 	}
 	
-	   @RequestMapping(method = RequestMethod.GET)
+	   @RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	   public ResponseEntity<List<ScholarshipsModel>> getAllScholarship() {
 	      return new ResponseEntity<>((List<ScholarshipsModel>) repo.findAll(),
 	            HttpStatus.OK);

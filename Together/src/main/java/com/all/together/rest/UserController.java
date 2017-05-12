@@ -39,13 +39,13 @@ public class UserController {
             HttpStatus.OK);
    }
 
-   @RequestMapping(value = "/signup", method = RequestMethod.GET)
+   @RequestMapping(value = "/signup", method = RequestMethod.GET, produces = "application/json")
    public ResponseEntity<UserModel> signUp(
          @RequestParam(value = "data", required = true) String data) {
       UserModel user = _gson.fromJson(data, UserModel.class);
       
       UserModel exists = userRepo.findOne(user.getId());
-
+      
       if(exists != null) {
          return new ResponseEntity<>(null, HttpStatus.OK);
       }

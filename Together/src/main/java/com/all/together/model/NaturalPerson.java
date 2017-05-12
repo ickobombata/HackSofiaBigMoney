@@ -25,20 +25,17 @@ public class NaturalPerson extends AbstractPersistentObject{
 	@Column(name = "id")
 	private transient Long id;
 	
-	@Basic(optional = false)
-	@NotNull
+
 	@Size(min = 1, max = 2147483647)
 	@Column(name = "status")
 	private String status;
 	
-	@Basic(optional = false)
-	@NotNull
+
 	@Size(min = 1, max = 2147483647)
 	@Column(name = "sex")
 	private String sex;
 	
-	@Basic(optional = false)
-	@NotNull
+
 	@Size(min = 1, max = 2147483647)
 	@Column(name = "education")
 	private String education;

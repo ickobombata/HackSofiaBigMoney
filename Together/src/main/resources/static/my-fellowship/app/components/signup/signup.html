@@ -1,4 +1,4 @@
-<div id="signup_modal_container">
+<div id="signup_modal_container" class="alert">
     <br/>
     <br/>
     <div class="brand-centered">
@@ -11,6 +11,30 @@
         <br/><br/>
         Password: <input type="password">
         <br/><br/>
+        <div class="container">
+            <ul>
+                <li>
+                    <input type="radio" id="f-option" name="selector">
+                    <label for="f-option">Pizza</label>
+
+                    <div class="check"></div>
+                </li>
+
+                <li>
+                    <input type="radio" id="s-option" name="selector">
+                    <label for="s-option">Bacon</label>
+
+                    <div class="check"><div class="inside"></div></div>
+                </li>
+
+                <li>
+                    <input type="radio" id="t-option" name="selector">
+                    <label for="t-option">Cats</label>
+
+                    <div class="check"><div class="inside"></div></div>
+                </li>
+            </ul>
+        </div>
         <button type="button" class="btn btn-md btn-primary">Sign up</button>
         <button type="button" class="btn btn-md btn-primary" ng-click="signupModal.close()">Cancel</button>
     </form>

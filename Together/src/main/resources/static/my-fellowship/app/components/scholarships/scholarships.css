@@ -1,0 +1,24 @@
+#scholarships_jumbotron {
+    background-image: url("../../../assets/images/scholarships/pencil-1486278_1920.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 360px;
+    border: 1px solid deepskyblue;
+    border-radius: 0;
+}
+
+
+#scholarships_jumbotron_content {
+    margin-top: -2em;
+    margin-left: -2em;
+    padding-top: 0em;
+    font-weight: bold;
+    color: white;
+}
+
+#headline_text {
+    background-color: rgb(125,41,0);
+    background-color: rgba(125,41,0, 0.2);
+    font-size: 48px;
+}

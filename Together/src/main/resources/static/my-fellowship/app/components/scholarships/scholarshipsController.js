@@ -1,5 +1,10 @@
-myApp.controller("ScholarshipsController", function ($scope, $rootScope, $location) {
+myApp.controller("ScholarshipsController", function ($scope, $http, $rootScope, $location) {
     $scope.scholarships = $rootScope.scholarships;
+
+    $http.get("http://localhost:8080/scholarships")
+        .then(function (response) {
+            $scope.scholarships = response.data;
+    });
 
     $scope.onlyRelevant = false;
     $scope.onlyWatched = false;

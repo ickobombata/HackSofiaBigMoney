@@ -1,0 +1,24 @@
+#programs_jumbotron {
+    background-image: url("../../../assets/images/programs/idea-2123972_1920.jpg");
+    background-size: cover;
+    background-position: center 45%;
+    background-repeat: no-repeat;
+    min-height: 360px;
+    border: 1px solid deepskyblue;
+    border-radius: 0;
+}
+
+
+#programs_jumbotron_content {
+    margin-top: -2em;
+    margin-left: -2em;
+    padding-top: 0em;
+    font-weight: bold;
+    color: white;
+}
+
+#headline_text {
+    background-color: rgb(50,50,50);
+    background-color: rgba(50,50,50, 0.7);
+    font-size: 48px;
+}

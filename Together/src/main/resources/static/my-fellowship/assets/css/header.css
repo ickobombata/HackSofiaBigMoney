@@ -70,7 +70,7 @@ Responsive navbar-brand image CSS
 #navbar9 ul li a:hover {
     font-weight: bold;
     background: white;
-    color: #0084ff;
+    color:#0084ff;
 }
 
 #navbar_user_logo {
@@ -82,4 +82,11 @@ Responsive navbar-brand image CSS
 
 .navbar-default {
     background: #0084ff;
+}
+
+#settings_buttons li a {
+    color: #5e5f69 !important;
+}
+#settings_buttons li a:hover {
+    color: #0084ff !important;
 }

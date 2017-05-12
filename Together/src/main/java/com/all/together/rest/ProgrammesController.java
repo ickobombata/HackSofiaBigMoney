@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.all.together.dao.ProgrammesRepository;
 import com.all.together.model.ProgrammesModel;
-import com.all.together.model.UserModel;
 import com.all.together.util.JavaUtil;
 
 @RestController
@@ -27,15 +26,15 @@ public class ProgrammesController {
 		super();
 		this.repo = companyRepo;
 	}
-
-
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ProgrammesModel>> getAllUsers(){
+	   
+	@RequestMapping(value = "/getPrograms", method=RequestMethod.GET)
+	public ResponseEntity<List<ProgrammesModel>> getPrograms(){
 		return new ResponseEntity<>( (List<ProgrammesModel>)repo.findAll(), HttpStatus.OK);
 	}
 
-   @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
-   public ResponseEntity<ProgrammesModel> getUserInfo(
+	
+   @RequestMapping(value = "/getProgramByName", method = RequestMethod.GET)
+   public ResponseEntity<ProgrammesModel> getProgramByName(
          @RequestParam(value = "data", required = true) String data) {
       HashMap<String, String> programData = JavaUtil.dissasambleJson(data);
       String name = programData.get("name");

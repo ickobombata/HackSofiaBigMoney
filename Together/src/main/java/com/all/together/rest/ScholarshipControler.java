@@ -17,6 +17,8 @@ import com.all.together.dao.ScholarshipsRepository;
 import com.all.together.model.ScholarshipsModel;
 import com.all.together.util.JavaUtil;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 @RestController
 @RequestMapping(value = "/scholarships")
 public class ScholarshipControler {

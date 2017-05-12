@@ -25,7 +25,6 @@ public class UserModel implements Serializable{
 
       @Id
       @GeneratedValue(strategy = GenerationType.IDENTITY)
-		@Basic(optional = false)
 		@NotNull
 		@Column(name = "id")
 		private Long id;
@@ -38,8 +37,6 @@ public class UserModel implements Serializable{
 
 
 		@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email") // if
-		@Basic(optional = false)
-		@NotNull
 		@Size(min = 1, max = 2147483647)
 		@Column(name = "email")
 		private String email;
@@ -50,13 +47,11 @@ public class UserModel implements Serializable{
 		@Column(name = "name")
 		private String name;
 		
-		@Basic(optional = false)
-		@NotNull
+		
 		@Column(name = "birthday")
 		private Date birthday;
 		
-		@Basic(optional = false)
-		@NotNull
+
 		@Size(min = 1, max = 2147483647)
 		@Column(name = "adress")
 		private String addres;

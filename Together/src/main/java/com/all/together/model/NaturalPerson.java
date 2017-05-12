@@ -21,7 +21,6 @@ public class NaturalPerson extends AbstractPersistentObject{
 	
 	@Basic(optional = false)
 	@NotNull
-	@Size(min = 1, max = 2147483647)
 	@Column(name = "id")
 	private transient Long id;
 	
@@ -40,6 +39,13 @@ public class NaturalPerson extends AbstractPersistentObject{
 	@Column(name = "education")
 	private String education;
 
+	public NaturalPerson(Long id) {
+	   this.id = id;
+	   this.status = "Default";
+	   this.sex = "Default";
+	   this.education = "Default";
+	}
+	
 	public Long getId() {
 		return id;
 	}

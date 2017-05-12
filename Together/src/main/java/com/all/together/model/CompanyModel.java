@@ -16,12 +16,10 @@ public class CompanyModel extends AbstractPersistentObject{
 
 	@Basic(optional = false)
 	@NotNull
-	@Size(min = 1, max = 2147483647)
 	@Column(name = "id")
 	private transient Long id;
 	
 
-	@Size(min = 1, max = 2147483647)
 	@Column(name = "employee_count")
 	private Long employee;
 	
@@ -35,6 +33,17 @@ public class CompanyModel extends AbstractPersistentObject{
 	@Column(name = "field")
 	private String field;
 
+	public CompanyModel(Long id) {
+	   this.id = id;
+	   this.boss = "Default";
+	   this.employee = new Long(10);
+	   this.field = "Default";
+	}
+	
+	public CompanyModel() {
+	   
+	}
+	
 	public Long getId() {
 		return id;
 	}

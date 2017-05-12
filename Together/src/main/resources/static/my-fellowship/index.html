@@ -24,7 +24,11 @@
 
         <div ng-view style="padding-top: 3.7em"></div>
 
-        <a id="tars-widget-fab" class="fab bounce closed" data-convid="SJKdef" data-autoopen="5" href="https://convbot.hellotars.com/conv/SJKdef" target="_blank" style="position:fixed;background-color:#0084ff;z-index:2147483647;width:62px;height:62px;cursor:pointer;border-radius:6px;box-shadow:0 2px 6px 0 rgba(0,0,0,.4);overflow:hidden;padding:0;border:0;bottom:4%;right:30px"><img class="convbot" src="https://tars-file-upload.s3.amazonaws.com/share/img/baso_300.png" convbot-color="#FFFFFF" style="width:100%"></a><script>(function(){var js,fs,d=document,id="tars-widget-script",b="https://tars-file-upload.s3.amazonaws.com/share/";if(!d.getElementById(id)){js=d.createElement("script");js.id=id;js.type="text/javascript";js.src=b+"js/widget.js";fs=d.getElementsByTagName("script")[0];fs.parentNode.insertBefore(js,fs)}})();</script>
+        <a id="tars-widget-fab" class="fab bounce closed" data-convid="SJKdef" data-autoopen="5" href="https://convbot.hellotars.com/conv/SJKdef" target="_blank" style="position:fixed;background-color:#0084ff;z-index:2147483647;width:62px;height:62px;cursor:pointer;border-radius:6px;box-shadow:0 2px 6px 0 rgba(0,0,0,.4);overflow:hidden;padding:0;border:0;bottom:4%;right:30px">
+            <img class="convbot" src="https://tars-file-upload.s3.amazonaws.com/share/img/baso_300.png" convbot-color="#FFFFFF" style="width:100%"></a>
+        <script>
+            (function(){var js,fs,d=document,id="tars-widget-script",b="https://tars-file-upload.s3.amazonaws.com/share/";if(!d.getElementById(id)){js=d.createElement("script");js.id=id;js.type="text/javascript";js.src=b+"js/widget.js";fs=d.getElementsByTagName("script")[0];fs.parentNode.insertBefore(js,fs)}})();
+        </script>
 
         <hr/>
         <div id="footer" ng-include="'app/shared/footer/footer.html'"></div>
@@ -46,6 +50,7 @@
     <script src="app/components/watched/watchedController.js"></script>
     <script src="app/authentication/signup/signupController.js"></script>
     <script src="app/authentication/login/loginController.js"></script>
+    <script src="app/components/home/homeController.js"></script>
 
 </body>
 </html>

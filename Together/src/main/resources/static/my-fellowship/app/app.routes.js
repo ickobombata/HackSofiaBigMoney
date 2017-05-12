@@ -4,6 +4,11 @@ myApp.config(function ($routeProvider) {
             {
                 templateUrl: "app/components/home/home.html"
             })
+        .when("/indexSignup",
+            {
+                controller: "HomeController",
+                templateUrl: "app/components/home/home.html"
+            })
         .when("/scholarships",
             {
                 controller: "ScholarshipsController",

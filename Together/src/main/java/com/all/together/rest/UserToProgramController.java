@@ -59,8 +59,7 @@ public class UserToProgramController {
 	      return new ResponseEntity<>(null, HttpStatus.OK);
 	   }
 	   repo.save(model);
-	      return new ResponseEntity<>(model, HttpStatus.OK); // we should return
-	                                                        // Logged in Home page.
+	      return new ResponseEntity<>(model, HttpStatus.OK); 
 	   }
 	
 	   @RequestMapping(value = "/getprograms" ,produces = "application/json", method = RequestMethod.GET)

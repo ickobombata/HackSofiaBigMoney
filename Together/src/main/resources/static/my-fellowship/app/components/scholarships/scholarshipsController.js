@@ -21,8 +21,7 @@ myApp.controller("ScholarshipsController", function ($scope, $http, $rootScope, 
        $scope.onlyWatched = !$scope.onlyWatched;
         $scope.onlyRelevant = false;
     };
-    $scope.selectScholarship = function (scholarship) {
-        $rootScope.currentScholarship = scholarship;
+    $scope.selectScholarship = function () {
         $location.url("/scholarship");
     };
 });

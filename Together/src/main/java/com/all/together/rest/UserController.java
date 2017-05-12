@@ -1,6 +1,5 @@
 package com.all.together.rest;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.all.together.dao.CompanyRepository;
+import com.all.together.dao.NaturalPersonRepositiry;
 import com.all.together.dao.UserRepository;
+import com.all.together.model.CompanyModel;
+import com.all.together.model.NaturalPerson;
 import com.all.together.model.UserModel;
 import com.all.together.util.JavaUtil;
 import com.all.together.util.SessionUtil;
@@ -25,15 +28,26 @@ import com.google.gson.GsonBuilder;
 public class UserController {
 
    private UserRepository userRepo;
+   private NaturalPersonRepositiry _naturalRepo;
+   private CompanyRepository _companyRepo;
    private Gson _gson;
 
+   
+   private static final String BOSS= "boss";
+   private static final String EMPLOYEE="employee";
+   private static final String FIELD="field";
+   private static final String EDUCATION="education";
+   private static final String SEX="sex";
+   private static final String STATUS="status";
    private static final String COMPANY_USER="company";
    private static final String NATURAL_USER="natural";
    
    @Autowired
-   public UserController(UserRepository userRepo) {
+   public UserController(UserRepository userRepo, CompanyRepository companyRepo, NaturalPersonRepositiry naturalRepo) {
       super();
       this.userRepo = userRepo;
+      this._companyRepo = companyRepo;
+      this._naturalRepo = naturalRepo;
       _gson = new GsonBuilder().setDateFormat("dd-mm-yyyy").create();
    }
 
@@ -51,23 +65,29 @@ public class UserController {
       String password = userData.get("password");
       String type = userData.get("type");
       
-
       Optional<Long> userId = userRepo.getUserId(username);
       if(userId.isPresent()) {
          return new ResponseEntity<>(null, HttpStatus.OK);
       }
-      
-      if(type==COMPANY_USER) {
-         
-      } else if(type==NATURAL_USER){
-         
-      } else {
-         return new ResponseEntity<>(null, HttpStatus.OK);
-      }
       UserModel user = new UserModel();
-      user.setName(username);
-     
+      user.setId(new Long(1500));
       userRepo.save(user);
+      Optional<Long> userIdTxt = userRepo.getUserId(user.getName());
+      if(!userIdTxt.isPresent()) {
+         throw new RuntimeException("the user cou;d not be saved!");
+      }
+      
+      if(type.equals(COMPANY_USER)) {
+         CompanyModel companyModel = new CompanyModel(user.getId());
+         companyModel.setUserId(userIdTxt.get());
+         _companyRepo.save(companyModel);
+      } else if(type.equals(NATURAL_USER)){
+         NaturalPerson naturalPerson = new NaturalPerson(user.getId());
+         _naturalRepo.save(naturalPerson);
+      } else {
+         throw new IllegalArgumentException("missing type argument");
+      }
+
       return new ResponseEntity<>(user, HttpStatus.OK); // we should return
                                                         // Logged in Home page.
    }
@@ -80,13 +100,28 @@ public class UserController {
       String password = userData.get("password");
 
       Long foundUserId = userRepo.getUserId(username).get();
+      
       if (foundUserId == null) {
          return new ResponseEntity<>(null, HttpStatus.OK);
       }
 
+      String foundUserPassword = userRepo.getUserPassword(username, password).get();
+      if(foundUserId == null) {
+         return new ResponseEntity<>(null, HttpStatus.OK);
+      }
+      if(foundUserPassword == null) {
+          return new ResponseEntity<>(null, HttpStatus.OK);
+       }
+       
+      
       SessionUtil.loginUser(username);
-      return new ResponseEntity<>(userRepo.findOne(foundUserId),
-            HttpStatus.OK); // returnning the user data
+      UserModel foundUser = userRepo.findOne(foundUserId);
+      if(foundUser.getPassword().equals(foundUserPassword)){
+          return new ResponseEntity<>(foundUser, HttpStatus.OK);  // returnning the user data
+      }
+      
+      return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+
    }
 
    @RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -106,14 +141,26 @@ public class UserController {
       HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
       String username = userData.get("username");
 
-      Long foundUserId = userRepo.getUserId(username).get();
-      if (foundUserId == null) {
+      Optional<Long> foundUserId = userRepo.getUserId(username);
+      if (!foundUserId.isPresent()) {
          return new ResponseEntity<>(null, HttpStatus.OK);
       }
-      UserModel userResult = userRepo.findOne(foundUserId);
+      
+      UserModel userResult = userRepo.findOne(foundUserId.get());
+
+      CompanyModel cm = _companyRepo.findOne(userResult.getId());
+      if(cm != null) {
+         userResult.setCompany(cm);
+      } else {
+         NaturalPerson np = _naturalRepo.findOne(userResult.getId());
+         userResult.setPerson(np);
+      }
+
       return new ResponseEntity<>(userResult, HttpStatus.OK);
    }
 
+//   zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz   
+   
    @RequestMapping(value = "/index")
    public String index() {
       return "INDEX PAGE";

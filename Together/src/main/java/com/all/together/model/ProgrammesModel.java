@@ -49,19 +49,6 @@ public class ProgrammesModel extends AbstractPersistentObject{
 	@Size(min = 1, max = 2147483647)
 	@Column(name = "type")
 	private String type;
-	
-	@Basic(optional = false)
-	@NotNull
-	@Column(name = "description")
-	private String description;
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	public String getName() {
 		return name;
@@ -103,9 +90,7 @@ public class ProgrammesModel extends AbstractPersistentObject{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((end_date == null) ? 0 : end_date.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((start_date == null) ? 0 : start_date.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -121,20 +106,10 @@ public class ProgrammesModel extends AbstractPersistentObject{
 		if (getClass() != obj.getClass())
 			return false;
 		ProgrammesModel other = (ProgrammesModel) obj;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
 		if (end_date == null) {
 			if (other.end_date != null)
 				return false;
 		} else if (!end_date.equals(other.end_date))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)

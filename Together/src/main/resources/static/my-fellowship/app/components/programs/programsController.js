@@ -64,4 +64,15 @@ myApp.controller("ProgramsController", function ($scope, $http, $rootScope) {
             $scope.tableHeading = undefined;
         }
     };
+
+    $scope.getProgramFilterType = function () {
+        if($scope.onlyIndividual) {
+            return "Individual";
+        } else if ($scope.onlyLegalEntity) {
+            return "Legal entity";
+        } else {
+            return "";
+        }
+    };
+
 });

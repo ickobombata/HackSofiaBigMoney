@@ -25,6 +25,18 @@ public class CompanyModel extends AbstractPersistentObject{
 	@Column(name = "employee_count")
 	private Long employee;
 	
+	
+	@Size(min = 1, max = 2147483647)
+	@Column(name = "user_id")
+	private Long userId;
+	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
 	@Size(min = 1, max = 2147483647)
 	@Column(name = "boss")

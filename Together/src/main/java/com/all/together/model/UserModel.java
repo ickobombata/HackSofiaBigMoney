@@ -57,11 +57,11 @@ public class UserModel implements Serializable{
 		private String addres;
 
 		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "company_id", referencedColumnName="id")
+		@JoinColumn(name = "user_id")
 		private transient CompanyModel company;
 		
 		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "person_id", referencedColumnName="id")
+		@JoinColumn(name = "user_id")
 		private transient NaturalPerson person;
 
 		

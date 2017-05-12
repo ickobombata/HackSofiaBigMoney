@@ -63,12 +63,8 @@ public class UserModel implements Serializable{
 		   this.password = "default";
 		}
 		
-		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "user_id")
 		private transient CompanyModel company;
 		
-		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "user_id")
 		private transient NaturalPerson person;
 
 		public String getPassword() {

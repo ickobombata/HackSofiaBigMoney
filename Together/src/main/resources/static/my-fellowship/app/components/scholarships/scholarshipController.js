@@ -7,7 +7,7 @@ myApp.controller("ScholarshipController", function ($scope, $rootScope, $http) {
         var userId = $rootScope.currentUser.id;
         var programId = null;
         var scholarshipId = $scope.scholarship.id;
-        var watchedId = 10000;
+        var watchedId = Math.floor(Math.random() * 20000) + 1;
         var watchedObject = {user_id: userId, program_id: programId, schoolarship_id: scholarshipId, id: watchedId};
         var watchedString = JSON.stringify(watchedObject);
         var requestUrl = serviceUrl + watchedString;

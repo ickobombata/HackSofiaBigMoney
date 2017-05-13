@@ -3,19 +3,19 @@
 <div>
     <div id="programs_jumbotron" class="jumbotron">
         <div id="programs_jumbotron_content" class="container for-about">
-            <h1><span id="headline_text">Programs</span></h1>
+            <h1><span id="headline_text">Програми</span></h1>
         </div>
     </div>
 
     <div align="center">
-        <button type="button" ng-class="{'active':onlyIndividual ==  true}" class="btn btn-lg btn-primary" ng-click="toggleIndividualButton()"><i class="glyphicon glyphicon-user"></i> Individual</button>
+        <button type="button" ng-class="{'active':onlyIndividual ==  true}" class="btn btn-lg btn-primary" ng-click="toggleIndividualButton()"><i class="glyphicon glyphicon-user"></i> Физическо лице</button>
         <span style="margin-left: 2em; margin-right: 2em;"></span>
-        <button type="button" ng-class="{'active':onlyLegalEntity == true}" class="btn btn-lg btn-primary" ng-click="toggleLegalEntityButton()"><i class="glyphicon glyphicon-briefcase"></i> Legal Entity</button>
+        <button type="button" ng-class="{'active':onlyLegalEntity == true}" class="btn btn-lg btn-primary" ng-click="toggleLegalEntityButton()"><i class="glyphicon glyphicon-briefcase"></i> Юридическо лице</button>
     </div>
 
     <br/>
 
-    <h3 align="center" ng-if="onlyIndividual == false && onlyLegalEntity == false"><i>(select an option)</i></h3>
+    <h3 align="center" ng-if="onlyIndividual == false && onlyLegalEntity == false"><i>(изберете опция)</i></h3>
 
     <div ng-if="onlyIndividual != false || onlyLegalEntity != false">
         <hr style="width: 50%;"/>
@@ -26,14 +26,14 @@
             <div style="display:inline-block; width: 200px; border-radius:10px" title="Search">
                 <div class="input-group input-group">
                     <span class="input-group-addon" id="quick-filter" style="border-top-left-radius:10em; border-bottom-left-radius:10em;"><i class="glyphicon glyphicon-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Search programs" aria-describedby="quick-filter" style="border-top-right-radius:10em; border-bottom-right-radius:10em;" ng-model="programsFilterText">
+                    <input type="text" class="form-control" placeholder="Търси програми" aria-describedby="quick-filter" style="border-top-right-radius:10em; border-bottom-right-radius:10em;" ng-model="programsFilterText">
                 </div>
             </div>
 
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-danger" ng-click="toggleAll()">All</button>
-                <button type="button" class="btn btn-danger" ng-click="toggleRelevant()">Relevant to me</button>
-                <button type="button" class="btn btn-danger" ng-click="toggleWatched()">Watched</button>
+                <button type="button" class="btn btn-danger" ng-click="toggleAll()">Всички</button>
+                <button type="button" class="btn btn-danger" ng-click="toggleRelevant()">Засягащи мен</button>
+                <button type="button" class="btn btn-danger" ng-click="toggleWatched()">Последвани</button>
             </div>
         </div>
 
@@ -44,11 +44,10 @@
         <table id="programs_table" class="table-fill">
             <thead>
             <tr>
-                <th class="text-center">Name</th>
-                <th class="text-center">Days left</th>
-                <th class="text-center">Deadline</th>
-                <th></th>
-                <th></th>
+                <th class="text-center">Име</th>
+                <th class="text-center">Оставащи дни</th>
+                <th class="text-center">Краен срок</th>
+                <th>Последвано</th>
             </tr>
             </thead>
             <tbody class="table-hover">
@@ -56,9 +55,6 @@
                 <td class="text-left"><b>{{program.name}}</b></td>
                 <td class="text-center"><i>{{calculateDaysLeft(program.end_date)}}</i></td>
                 <td class="text-center"><i>{{program.end_date}}</i></td>
-                <td class="text-center">
-                    <span ng-show="program.isRelevant" class="glyphicon glyphicon-certificate" style="color: orange"></span>
-                </td>
                 <td class="text-center">
                     <span ng-show="program.isWatched" class="glyphicon glyphicon-flag" style="color: red"></span>
                 </td>

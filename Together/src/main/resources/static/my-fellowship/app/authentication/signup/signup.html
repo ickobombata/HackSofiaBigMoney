@@ -7,27 +7,27 @@
         <span class="navbar-brand" style="font-size: 42px;"><img id="navbar_brand_logo" src="assets/images/logo/myFellowship_logo.png" alt="My Fellowship">My Fellowship</span>
     </div>
     <br/><br/>
-    <h2 align="center">Sign up</h2>
+    <h2 align="center">Регистрация</h2>
     <form align="center">
-        Username: <input type="text" ng-model="signupUsername" required>
+        Име: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" ng-model="signupUsername" required>
         <br/><br/>
-        Password: <input type="password" ng-model="signupPassword" required>
+        Парола: <input type="password" ng-model="signupPassword" required>
         <br/><br/>
         <div>
             <div id="radios">
-                <label for="individual" class="material-icons">
+                <label for="физическо лице" class="material-icons">
                     <input type="radio" ng-model="mode" id="individual" value="natural" required/>
                     <span><i class="glyphicon glyphicon-user"></i></span>
                 </label>
-                <label for="legal entity" class="material-icons">
+                <label for="юридическо лице" class="material-icons">
                     <input type="radio" ng-model="mode" id="legal entity" value="company" /> <!-- invalid ID, need to find a workaround -->
                     <span><i class="glyphicon glyphicon-briefcase"></i></span>
                 </label>
             </div>
         </div>
         <br/><br/>
-        <input type="submit" class="btn btn-md btn-primary" ng-click="signup()" value="Sign up"/>
-        <button type="button" class="btn btn-md btn-primary" ng-click="signupModal.close()">Cancel</button>
+        <input type="submit" class="btn btn-md btn-primary" ng-click="signup()" value="Регистрирай"/>
+        <button type="button" class="btn btn-md btn-primary" ng-click="signupModal.close()">Назад</button>
     </form>
     <br/>
     <br/>

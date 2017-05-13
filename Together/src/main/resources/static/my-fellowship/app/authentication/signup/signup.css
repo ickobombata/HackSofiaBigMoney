@@ -50,7 +50,7 @@ input[type="radio"]:focus + span {
     opacity: 0.75;
     background-color: #323232;
     color: #fff;
-    width: 6.5em;
+    width: 7em;
     padding: 4px;
     border-radius: 3px;
     display: block;

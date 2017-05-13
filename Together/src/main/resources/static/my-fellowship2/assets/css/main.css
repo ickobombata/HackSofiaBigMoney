@@ -1,0 +1,47 @@
+body {
+    background: white;
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+}
+
+
+hr {
+    border-color: deepskyblue;
+}
+
+#scholarships_table tbody tr {
+    border: 2px solid green;
+}
+
+#programs_table tbody tr {
+    border: 2px solid darkred;
+}
+
+#watched_table tbody tr {
+    border: 2px solid indianred;
+}
+
+#scholarships_table tbody tr:hover {
+    background: lightgreen;
+    cursor: pointer;
+}
+
+#programs_table tbody tr:hover {
+    background: darkred;
+    cursor: pointer;
+}
+
+#watched_table tbody tr:hover {
+    background: indianred;
+    cursor: pointer;
+}
+
+#scholarship_date_range {
+}
+
+.filter-row {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+

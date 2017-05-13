@@ -1,0 +1,53 @@
+<div>
+    <h1 align="center" style="text-shadow: 1px 2px rgba(0, 255, 255, 0.5);">{{scholarship.name}}</h1>
+    <br/>
+
+    <div id="scholarship_date_range" style="padding: 0 1em;">
+        <span class="pull-left">Start date:</span>
+        <span class="pull-right">End date:</span>
+        <br/>
+        <span class="pull-left">{{scholarship.startDate}}</span>
+        <span class="pull-right">{{scholarship.endDate}}</span>
+        <br/><br/>
+        <button class="btn btn-success pull-right" ng-show="isUserLoggedIn" ng-click="watch()" ng-disabled="isFollowed(scholarship.id)"><i class="glyphicon glyphicon-flag"></i> Follow</button>
+
+    </div>
+
+    <br/><br/>
+
+    <div align="center">
+
+        <h1>Time left:</h1>
+        <div id="clockdiv">
+            <div><span class="days"></span><div class="smalltext">Days</div></div>
+            <div><span class="hours"></span><div class="smalltext">Hours</div></div>
+            <div><span class="minutes"></span><div class="smalltext">Minutes</div></div>
+            <div><span class="seconds"></span><div class="smalltext">Seconds</div></div>
+        </div>
+
+        <h1>Description:</h1>
+        <div class="scholarship-description well well-lg">
+            <br/>
+            <span style="font-size: 24px;">{{scholarship.description}}</span>
+            <br/>
+            <a href="https://eurostipendii.mon.bg/?m=2" target="_blank" class="btn btn-primary btn-lg pull-right" style="font-size: 18px; font-weight: bold; width: 20%;"><i class="glyphicon glyphicon-info-sign"></i> More info</a>
+            <br/>
+            <br/>
+        </div>
+
+        <br/><br/>
+
+        <h1>Requirements:</h1>
+        <div class="scholarship-requirements well well-lg">
+            <br/>
+            <span style="font-size: 24px;">{{scholarship.candidateRequirements}}</span>
+        </div>
+
+        <div>
+            <a href="https://eurostipendii.mon.bg/" target="_blank" class="btn btn-success btn-lg" style="font-size: 36px; font-weight: bold; width: 60%;"><i class="glyphicon glyphicon-send"></i> Apply</a>
+        </div>
+
+    </div>
+
+</div>
+

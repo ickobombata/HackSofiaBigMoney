@@ -67,9 +67,9 @@ myApp.controller("ProgramsController", function ($scope, $http, $rootScope, $loc
 
     $scope.getProgramFilterType = function () {
         if($scope.onlyIndividual) {
-            return "Individual";
+            return "Физическо лице";
         } else if ($scope.onlyLegalEntity) {
-            return "Legal entity";
+            return "Юридическо лице";
         } else {
             return "";
         }

@@ -7,16 +7,16 @@
         <span class="navbar-brand" style="font-size: 42px;"><img id="navbar_brand_logo" src="assets/images/logo/myFellowship_logo.png" alt="My Fellowship">My Fellowship</span>
     </div>
     <br/><br/>
-    <h2 align="center">Log in</h2>
+    <h2 align="center">Вход</h2>
     <form action="" align="center" ng-submit="login()">
-        Username: <input type="text" ng-model="loginName" required>
+        Име: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" ng-model="loginName" required>
         <br/><br/>
-        Password: <input type="password" ng-model="loginPassword" required>
+        Парола: <input type="password" ng-model="loginPassword" required>
         <br/><br/>
         <span id="error_message">{{errorMessage}}</span>
         <br/><br/>
-        <input type="submit" class="btn btn-md btn-primary" value="Log in"/>
-        <button type="button" class="btn btn-md btn-primary" ng-click="loginModal.close()">Cancel</button>
+        <input type="submit" class="btn btn-md btn-primary" value="Вход"/>
+        <button type="button" class="btn btn-md btn-primary" ng-click="loginModal.close()">Назад</button>
     </form>
     <br/>
     </br>

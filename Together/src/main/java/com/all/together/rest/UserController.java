@@ -114,6 +114,13 @@ public class UserController {
       return new ResponseEntity<>(userResult, HttpStatus.OK);
    }
 
+   @RequestMapping(value = "update", produces = "application/json", method = RequestMethod.GET)
+   public ResponseEntity<UserModel> updateUser( @RequestParam(value = "data", required = true) String data){
+	   UserModel user = _gson.fromJson(data, UserModel.class);
+	   userRepo.save(user);
+	   return new ResponseEntity<>(user, HttpStatus.OK);
+   }
+   
    @RequestMapping(value = "/index")
    public String index() {
       return "INDEX PAGE";

@@ -1,5 +1,6 @@
 package com.all.together.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,7 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import com.all.together.model.CompanyModel;
 import com.all.together.model.NaturalPerson;
 
 @RepositoryRestResource(path = "natural_person")
@@ -20,4 +20,8 @@ public interface NaturalPersonRepositiry extends CrudRepository<NaturalPerson, L
          @Param("sex") String sex, 
          @Param("status") String status,
          @Param("userId") Long userId);
+   
+
+   @Query("SELECT u.id  FROM NaturalPerson as u WHERE u.userId = :userId")
+   public Optional<List<Long>> getNaturalId(@Param("userId") String userId);
 }

@@ -1,5 +1,6 @@
 package com.all.together.rest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -65,4 +66,18 @@ public class ProgrammesController {
       // the user
       // data
    }
+   
+   @RequestMapping(value = "/getByField", produces = "application/json", method = RequestMethod.GET)
+   public ResponseEntity<List<ProgrammesModel>> getAllByField (@RequestParam(value = "data", required= true)String data){
+	   List<ProgrammesModel> prog = (List<ProgrammesModel>) repo.findAll();
+	   List<ProgrammesModel> fil = new ArrayList<>();
+	   for(ProgrammesModel model : prog){
+		   if(model.getDescription().toLowerCase().contains(data.toLowerCase())){
+			   fil.add(model);
+		   }
+	   }
+	   
+	   return new ResponseEntity<>(fil, HttpStatus.OK);
+   }
+   
 }

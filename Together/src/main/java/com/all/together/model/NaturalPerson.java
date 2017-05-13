@@ -39,14 +39,20 @@ public class NaturalPerson extends AbstractPersistentObject {
    private String education;
 
    public NaturalPerson(Long id) {
-      this.id = id;
-      this.status = "Default";
-      this.sex = "Default";
-      this.education = "Default";
+      this(new Long(1), "DEFAULT", new Long(69), "DEFAULT", "DEFAULT");
    }
+   
+   public NaturalPerson(Long id, String status, Long userId, String sex, String education) {
+	super();
+	this.id = id;
+	this.status = status;
+	this.userId = userId;
+	this.sex = sex;
+	this.education = education;
+}
 
-   public NaturalPerson() {
-      
+public NaturalPerson() {
+	      
    }
    
    public Long getUserId() {

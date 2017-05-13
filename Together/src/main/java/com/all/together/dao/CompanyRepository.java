@@ -1,5 +1,6 @@
 package com.all.together.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,4 +20,7 @@ public interface CompanyRepository extends CrudRepository<CompanyModel, Long>{
          @Param("employee") Long employee,
          @Param("field") String field,
          @Param("userId") Long userId);
+   
+   @Query("SELECT u.id  FROM CompanyModel as u WHERE u.userId = :userId")
+   public Optional<List<Long>> getCompanyId(@Param("userId") String userId);
 }

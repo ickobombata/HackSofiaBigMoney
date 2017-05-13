@@ -33,13 +33,23 @@ public class CompanyModel extends AbstractPersistentObject {
    private String field;
 
    public CompanyModel(Long id) {
+	   this(id, new Long(10), new Long(10), "DEFAULT", "DEFAULT");
       this.id = id;
       this.boss = "Default";
       this.employee = new Long(10);
       this.field = "Default";
    }
+   
+   public CompanyModel(Long id, Long employee, Long userId, String boss, String field) {
+	this.id = id;
+	this.employee = employee;
+	this.userId = userId;
+	this.boss = boss;
+	this.field = field;
+}
 
-   public CompanyModel() {
+
+public CompanyModel() {
 
    }
 

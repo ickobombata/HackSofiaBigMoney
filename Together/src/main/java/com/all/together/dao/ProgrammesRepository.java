@@ -18,4 +18,6 @@ public interface ProgrammesRepository extends CrudRepository<ProgrammesModel, Lo
    
    @Query("SELECT u  FROM ProgrammesModel u WHERE u.description LIKE %:description%")
    public Optional<List<ProgrammesModel>> getAllProgramsByDesriptions(@Param("description") String description);
+   
+
 }

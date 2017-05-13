@@ -27,148 +27,171 @@ import com.google.gson.GsonBuilder;
 @RequestMapping(value = "/users")
 public class UserController {
 
-   private UserRepository userRepo;
-   private NaturalPersonRepositiry _naturalRepo;
-   private CompanyRepository _companyRepo;
-   private Gson _gson;
+	private UserRepository userRepo;
+	private NaturalPersonRepositiry _naturalRepo;
+	private CompanyRepository _companyRepo;
+	private Gson _gson;
+	private static final String ID = "id";
 
-   
-   private static final String BOSS= "boss";
-   private static final String EMPLOYEE="employee";
-   private static final String FIELD="field";
-   private static final String EDUCATION="education";
-   private static final String SEX="sex";
-   private static final String STATUS="status";
-   private static final String COMPANY_USER="company";
-   private static final String NATURAL_USER="natural";
-   
-   @Autowired
-   public UserController(UserRepository userRepo, CompanyRepository companyRepo, NaturalPersonRepositiry naturalRepo) {
-      super();
-      this.userRepo = userRepo;
-      this._companyRepo = companyRepo;
-      this._naturalRepo = naturalRepo;
-      _gson = new GsonBuilder().setDateFormat("dd-mm-yyyy").create();
-   }
+	private static final String BOSS = "boss";
+	private static final String EMPLOYEE = "employee";
+	private static final String FIELD = "field";
+	private static final String EDUCATION = "education";
+	private static final String SEX = "sex";
+	private static final String STATUS = "status";
+	private static final String COMPANY_USER = "company";
+	private static final String NATURAL_USER = "natural";
 
-   @RequestMapping(method = RequestMethod.GET)
-   public ResponseEntity<List<UserModel>> getAllUsers() {
-      return new ResponseEntity<>((List<UserModel>) userRepo.findAll(),
-            HttpStatus.OK);
-   }
+	@Autowired
+	public UserController(UserRepository userRepo, CompanyRepository companyRepo, NaturalPersonRepositiry naturalRepo) {
+		super();
+		this.userRepo = userRepo;
+		this._companyRepo = companyRepo;
+		this._naturalRepo = naturalRepo;
+		_gson = new GsonBuilder().setDateFormat("dd-mm-yyyy").create();
+	}
 
-   @RequestMapping(value = "/signup", method = RequestMethod.GET, produces = "application/json")
-   public ResponseEntity<UserModel> signUp(
-         @RequestParam(value = "data", required = true) String data) {
-      HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
-      String username = userData.get("username");
-      String password = userData.get("password");
-      String type = userData.get("type");
-      
-      Optional<Long> userId = userRepo.getUserId(username);
-      if(userId.isPresent()) {
-         return new ResponseEntity<>(null, HttpStatus.OK);
-      }
-      UserModel user = new UserModel();
-      user.setId(new Long(1500));
-      userRepo.save(user);
-      Optional<Long> userIdTxt = userRepo.getUserId(user.getName());
-      if(!userIdTxt.isPresent()) {
-         throw new RuntimeException("the user cou;d not be saved!");
-      }
-      
-      if(type.equals(COMPANY_USER)) {
-         CompanyModel companyModel = new CompanyModel(user.getId());
-         companyModel.setUserId(userIdTxt.get());
-         _companyRepo.save(companyModel);
-      } else if(type.equals(NATURAL_USER)){
-         NaturalPerson naturalPerson = new NaturalPerson(user.getId());
-         _naturalRepo.save(naturalPerson);
-      } else {
-         throw new IllegalArgumentException("missing type argument");
-      }
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<UserModel>> getAllUsers() {
+		return new ResponseEntity<>((List<UserModel>) userRepo.findAll(), HttpStatus.OK);
+	}
 
-      return new ResponseEntity<>(user, HttpStatus.OK); // we should return
-                                                        // Logged in Home page.
-   }
+	@RequestMapping(value = "/signup", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<UserModel> signUp(@RequestParam(value = "data", required = true) String data) {
+		HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
+		String username = userData.get("username");
+		String password = userData.get("password");
+		String type = userData.get("type");
 
-   @RequestMapping(value = "/login" ,produces = "application/json", method = RequestMethod.GET)
-   public ResponseEntity<UserModel> login(
-         @RequestParam(value = "data", required = true) String data) {
-      HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
-      String username = userData.get("username");
-      String password = userData.get("password");
+		Optional<List<Long>> userId = userRepo.getUserId(username);
+		if (!userId.isPresent()) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
+		UserModel user = new UserModel();
+		user.setId(new Long(1500));
+		user.setName(username);
+		user.setPassword(password);
+		userRepo.save(user);
+		Optional<List<Long>> userIdTxt = userRepo.getUserId(user.getName());
+		if (!userIdTxt.isPresent()) {
+			throw new RuntimeException("the user cou;d not be saved!");
+		}
 
-      Long foundUserId = userRepo.getUserId(username).get();
-      
-      if (foundUserId == null) {
-         return new ResponseEntity<>(null, HttpStatus.OK);
-      }
+		if (type.equals(COMPANY_USER)) {
+			CompanyModel companyModel = new CompanyModel(user.getId());
+			companyModel.setUserId(userIdTxt.get().get(0));
+			_companyRepo.save(companyModel);
+		} else if (type.equals(NATURAL_USER)) {
+			NaturalPerson naturalPerson = new NaturalPerson(user.getId());
+			_naturalRepo.save(naturalPerson);
+		} else {
+			throw new IllegalArgumentException("missing type argument");
+		}
 
-      String foundUserPassword = userRepo.getUserPassword(username, password).get();
-      if(foundUserId == null) {
-         return new ResponseEntity<>(null, HttpStatus.OK);
-      }
-      if(foundUserPassword == null) {
-          return new ResponseEntity<>(null, HttpStatus.OK);
-       }
-       
-      
-      SessionUtil.loginUser(username);
-      UserModel foundUser = userRepo.findOne(foundUserId);
-      if(foundUser.getPassword().equals(foundUserPassword)){
-          return new ResponseEntity<>(foundUser, HttpStatus.OK);  // returnning the user data
-      }
-      
-      return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+		return new ResponseEntity<>(user, HttpStatus.OK); // we should return
+															// Logged in Home
+															// page.
+	}
 
-   }
+	@RequestMapping(value = "/login", produces = "application/json", method = RequestMethod.GET)
+	public ResponseEntity<UserModel> login(@RequestParam(value = "data", required = true) String data) {
+		HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
+		String username = userData.get("username");
+		String password = userData.get("password");
 
-   @RequestMapping(value = "/logout", method = RequestMethod.GET)
-   public ResponseEntity<String> logout(
-         @RequestParam(value = "data", required = true) String data) {
-      HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
-      String username = userData.get("username");
+		Optional<List<Long>> foundUserId = userRepo.getUserId(username);
 
-      boolean success = SessionUtil.logoutUser(username);
+		if (!foundUserId.isPresent()) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
 
-      return new ResponseEntity<>("good", HttpStatus.OK); // return landing page
-   }
+		String foundUserPassword = userRepo.getUserPassword(username, password).get().get(0);
+		if (foundUserId == null) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
+		if (foundUserPassword == null) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
 
-   @RequestMapping(value = "/getUserInfo",produces = "application/json", method = RequestMethod.GET)
-   public ResponseEntity<UserModel> getUserInfo(
-         @RequestParam(value = "data", required = true) String data) {
-      HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
-      String username = userData.get("username");
+		SessionUtil.loginUser(username);
+		UserModel foundUser = userRepo.findOne(foundUserId.get().get(0));
+		if (foundUser.getPassword().equals(foundUserPassword)) {
+			return new ResponseEntity<>(foundUser, HttpStatus.OK); // returnning
+																	// the user
+																	// data
+		}
+		return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+	}
 
-      Optional<Long> foundUserId = userRepo.getUserId(username);
-      if (!foundUserId.isPresent()) {
-         return new ResponseEntity<>(null, HttpStatus.OK);
-      }
-      
-      UserModel userResult = userRepo.findOne(foundUserId.get());
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ResponseEntity<String> logout(@RequestParam(value = "data", required = true) String data) {
+		HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
+		String username = userData.get("username");
 
-      CompanyModel cm = _companyRepo.findOne(userResult.getId());
-      if(cm != null) {
-         userResult.setCompany(cm);
-      } else {
-         NaturalPerson np = _naturalRepo.findOne(userResult.getId());
-         userResult.setPerson(np);
-      }
+		boolean success = SessionUtil.logoutUser(username);
 
-      return new ResponseEntity<>(userResult, HttpStatus.OK);
-   }
+		return new ResponseEntity<>("good", HttpStatus.OK); // return landing
+															// page
+	}
 
-   @RequestMapping(value = "update", produces = "application/json", method = RequestMethod.GET)
-   public ResponseEntity<UserModel> updateUser( @RequestParam(value = "data", required = true) String data){
-	   UserModel user = _gson.fromJson(data, UserModel.class);
-	   userRepo.save(user);
-	   return new ResponseEntity<>(user, HttpStatus.OK);
-   }
+	@RequestMapping(value = "/getUserInfo", produces = "application/json", method = RequestMethod.GET)
+	public ResponseEntity<UserModel> getUserInfo(@RequestParam(value = "data", required = true) String data) {
+		HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
+		String username = userData.get("username");
 
-   
-   @RequestMapping(value = "/index")
-   public String index() {
-      return "INDEX PAGE";
-   }
+		Optional<List<Long>> foundUserId = userRepo.getUserId(username);
+		if (!foundUserId.isPresent()) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
+
+		UserModel userResult = userRepo.findOne(foundUserId.get().get(0));
+
+		CompanyModel cm = _companyRepo.findOne(userResult.getId());
+		if (cm != null) {
+			userResult.setCompany(cm);
+		} else {
+			NaturalPerson np = _naturalRepo.findOne(userResult.getId());
+			userResult.setPerson(np);
+		}
+
+		return new ResponseEntity<>(userResult, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "update", produces = "application/json", method = RequestMethod.GET)
+	public ResponseEntity<UserModel> updateUser(@RequestParam(value = "data", required = true) String data) {
+		HashMap<String, String> userData = JavaUtil.dissasambleJson(data);
+		UserModel user = _gson.fromJson(data, UserModel.class);
+
+		String type = userData.get("type");
+
+		if (type.equals(COMPANY_USER)) {
+
+		} else if (type.equals(NATURAL_USER)) {
+			CompanyModel companyModel = new CompanyModel(new Long(1), new Long(userData.get(EMPLOYEE)), user.getId(),
+					userData.get(BOSS), userData.get(FIELD));
+			Optional<List<Long>> id = _companyRepo.getCompanyId(userData.get(ID));
+			if (!id.isPresent()) {
+				throw new IllegalStateException("cant miss company repo id for " + userData.get(ID));
+			}
+			companyModel.setId(id.get().get(0));
+			_companyRepo.save(companyModel);
+		} else {
+			NaturalPerson naturalPerson = new NaturalPerson(new Long(1), userData.get(STATUS), user.getId(),
+					userData.get(SEX), userData.get(EDUCATION));
+			Optional<List<Long>> id = _naturalRepo.getNaturalId(userData.get(ID));
+			if (!id.isPresent()) {
+				throw new IllegalStateException("cant miss company repo id for " + userData.get(ID));
+			}
+			naturalPerson.setId(id.get().get(0));
+			_naturalRepo.save(naturalPerson);
+		}
+
+		userRepo.save(user);
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/index")
+	public String index() {
+		return "INDEX PAGE";
+	}
 }

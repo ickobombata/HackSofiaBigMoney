@@ -37,8 +37,20 @@ public class NaturalPerson extends AbstractPersistentObject {
    @Size(min = 1, max = 2147483647)
    @Column(name = "education")
    private String education;
+   
+   
+   @Column(name = "grade")
+   private double grade;
 
-   public NaturalPerson(Long id) {
+   public double getGrade() {
+	return grade;
+}
+
+public void setGrade(double grade) {
+	this.grade = grade;
+}
+
+public NaturalPerson(Long id) {
       this.id = id;
       this.status = "Default";
       this.sex = "Default";

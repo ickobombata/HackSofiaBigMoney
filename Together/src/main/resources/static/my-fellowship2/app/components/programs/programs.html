@@ -47,8 +47,7 @@
                 <th class="text-center">Name</th>
                 <th class="text-center">Days left</th>
                 <th class="text-center">Deadline</th>
-                <th></th>
-                <th></th>
+                <th class="text-center">Watched</th>
             </tr>
             </thead>
             <tbody class="table-hover">
@@ -56,9 +55,6 @@
                 <td class="text-left"><b>{{program.name}}</b></td>
                 <td class="text-center"><i>{{calculateDaysLeft(program.end_date)}}</i></td>
                 <td class="text-center"><i>{{program.end_date}}</i></td>
-                <td class="text-center">
-                    <span ng-show="program.isRelevant" class="glyphicon glyphicon-certificate" style="color: orange"></span>
-                </td>
                 <td class="text-center">
                     <span ng-show="program.isWatched" class="glyphicon glyphicon-flag" style="color: red"></span>
                 </td>

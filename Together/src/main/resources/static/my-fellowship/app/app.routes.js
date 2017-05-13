@@ -24,6 +24,11 @@ myApp.config(function ($routeProvider) {
                 controller: "ProgramsController",
                 templateUrl: "app/components/programs/programs.html"
             })
+        .when("/program",
+            {
+                controller: "ProgramController",
+                templateUrl: "app/components/programs/program.html"
+            })
         .when("/watched",
             {
                 controller: "WatchedController",

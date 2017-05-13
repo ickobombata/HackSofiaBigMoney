@@ -52,7 +52,7 @@
             </tr>
             </thead>
             <tbody class="table-hover">
-            <tr ng-repeat="program in programs | filter:programsFilterText | isRelevant:this | isWatched: this | programType: getProgramFilterType()" ng-click="selectProgram()">
+            <tr ng-repeat="program in programs | filter:programsFilterText | isRelevant:this | isWatched: this | programType: getProgramFilterType()" ng-click="selectProgram(program)">
                 <td class="text-left"><b>{{program.name}}</b></td>
                 <td class="text-center"><i>{{calculateDaysLeft(program.end_date)}}</i></td>
                 <td class="text-center"><i>{{program.end_date}}</i></td>

@@ -50,11 +50,16 @@ public void setGrade(double grade) {
 	this.grade = grade;
 }
 
+<<<<<<< HEAD
+   public NaturalPerson(Long id) {
+      this(new Long(1), "DEFAULT", new Long(69), "DEFAULT", "DEFAULT");
+=======
 public NaturalPerson(Long id) {
       this.id = id;
       this.status = "Default";
       this.sex = "Default";
       this.education = "Default";
+>>>>>>> 98b1f7d4975b287c7cfd8243e69cff9d58843ddb
    }
    
    public NaturalPerson(Long id, String status, Long userId, String sex, String education) {
@@ -66,8 +71,8 @@ public NaturalPerson(Long id) {
 	this.education = education;
 }
 
-   public NaturalPerson() {
-      
+public NaturalPerson() {
+	      
    }
    
    public Long getUserId() {

@@ -1,9 +1,24 @@
-myApp.controller("ScholarshipController", function ($scope, $rootScope) {
-    // var deadline = 'May 21 2017 18:00:18 GMT+0300';
+myApp.controller("ScholarshipController", function ($scope, $rootScope, $http) {
     $scope.scholarship = $rootScope.currentScholarship;
     var deadline = $scope.scholarship.endDate;
-    $scope.follow = function () {
 
+    $scope.watch = function () {
+        var serviceUrl = "http://localhost:8080/watched/addwatch?data=";
+        var userId = $rootScope.currentUser.id;
+        var programId = null;
+        var scholarshipId = $scope.scholarship.id;
+        var watchedId = 10000;
+        var watchedObject = {user_id: userId, program_id: programId, schoolarship_id: scholarshipId, id: watchedId};
+        var watchedString = JSON.stringify(watchedObject);
+        var requestUrl = serviceUrl + watchedString;
+
+         $http.get(requestUrl)
+             .then(function success(response) {
+                 $rootScope.watchedUserScholarships.push(scholarshipId);
+                 console.log("Successful watch");
+             }, function failure(response) {
+                 console.log("Failed watch");
+             })
     };
 
     function time_remaining(endtime) {

@@ -1,7 +1,7 @@
 myApp.controller("ProgramsController", function ($scope, $http, $rootScope) {
 
     $scope.programs = $rootScope.programs;
-    $http.get("http://localhost:8080/programs")
+    $http.get("http://localhost:8080/programs/getPrograms")
         .then(function (response) {
             $scope.programs = response.data;
         });

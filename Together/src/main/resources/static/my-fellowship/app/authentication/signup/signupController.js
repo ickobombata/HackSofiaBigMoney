@@ -1,9 +1,10 @@
 myApp.controller("SignupController", function ($scope, $http, $rootScope) {
     $scope.errorMessage = null;
     $scope.signup = function () {
+        console.log($scope.mode);
         var serviceUrl = "http://localhost:8080/users/signup?data=";
-        var ID_KEY = 10000;
-        var userObject = {id: ID_KEY, name: $scope.signupUsername, password: $scope.signupPassword};
+        var ID_KEY = Math.floor(Math.random() * 10000) + 1;
+        var userObject = {id: ID_KEY, username: $scope.signupUsername, password: $scope.signupPassword, type: $scope.mode};
         var userString = JSON.stringify(userObject);
         var requestUrl = serviceUrl + userString;
 

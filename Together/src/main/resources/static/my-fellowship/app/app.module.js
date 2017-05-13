@@ -49,6 +49,13 @@ myApp.run(function ($rootScope, $uibModal) {
         $rootScope.isUserLoggedIn = false;
         $rootScope.currentUser = null;
     };
+
+    $rootScope.openProfile = function () {
+        $rootScope.profileModal = $uibModal.open({
+            templateUrl: "app/components/profile/profile.html",
+            controller: "ProfileController"
+        });
+    };
 });
 
 

@@ -2,11 +2,12 @@ myApp.config(function ($routeProvider) {
     $routeProvider
         .when("/",
             {
+                controller: "HomeController",
                 templateUrl: "app/components/home/home.html"
             })
         .when("/indexSignup",
             {
-                controller: "HomeController",
+                controller: "HomeSingupController",
                 templateUrl: "app/components/home/home.html"
             })
         .when("/scholarships",

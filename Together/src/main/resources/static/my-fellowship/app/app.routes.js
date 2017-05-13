@@ -1,6 +1,6 @@
 myApp.config(function ($routeProvider) {
     $routeProvider
-        .when("/index",
+        .when("/",
             {
                 templateUrl: "app/components/home/home.html"
             })
@@ -19,10 +19,20 @@ myApp.config(function ($routeProvider) {
                 controller: "ProgramsController",
                 templateUrl: "app/components/programs/programs.html"
             })
+        .when("/program",
+            {
+                controller: "ProgramController",
+                templateUrl: "app/components/programs/program.html"
+            })
         .when("/watched",
             {
                 controller: "WatchedController",
                 templateUrl: "app/components/watched/watched.html"
+            })
+        .when("/profile",
+            {
+                controller: "ProfileController",
+                templateUrl: "app/components/profile/profile.html"
             })
         .when("/about",
             {

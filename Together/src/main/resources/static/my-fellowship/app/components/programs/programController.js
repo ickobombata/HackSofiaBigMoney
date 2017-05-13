@@ -1,26 +1,7 @@
-myApp.controller("ScholarshipController", function ($scope, $rootScope, $http) {
-    $scope.scholarship = $rootScope.currentScholarship;
-    var deadline = $scope.scholarship.endDate;
-
-    $scope.watch = function () {
-        var serviceUrl = "http://localhost:8080/watched/addwatch?data=";
-        var userId = $rootScope.currentUser.id;
-        var programId = null;
-        var scholarshipId = $scope.scholarship.id;
-        var watchedId = 10000;
-        var watchedObject = {user_id: userId, program_id: programId, schoolarship_id: scholarshipId, id: watchedId};
-        var watchedString = JSON.stringify(watchedObject);
-        var requestUrl = serviceUrl + watchedString;
-
-         $http.get(requestUrl)
-             .then(function success(response) {
-                 $rootScope.watchedUserScholarships.push(scholarshipId);
-                 console.log("Successful watch");
-             }, function failure(response) {
-                 console.log("Failed watch");
-             })
-    };
-
+myApp.controller("ProgramController", function($scope, $rootScope){
+    $scope.program = $rootScope.currentProgram;
+    console.log($scope.program);
+    var deadline = $scope.program.end_date;
     function time_remaining(endtime) {
         var t = Date.parse(endtime) - Date.parse(new Date());
         var seconds = Math.floor( (t/1000) % 60 );
@@ -52,8 +33,7 @@ myApp.controller("ScholarshipController", function ($scope, $rootScope, $http) {
                 days_span.innerHTML = '0';
                 hours_span.innerHTML = '0';
                 minutes_span.innerHTML = '0';
-                seconds_span.innerHTML = '0';
-            }
+                seconds_span.innerHTML = '0'}
         }
         update_clock();
         var timeinterval = setInterval(update_clock,1000);

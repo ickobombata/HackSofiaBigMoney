@@ -1,4 +1,4 @@
-myApp.controller("ProgramsController", function ($scope, $http, $rootScope) {
+myApp.controller("ProgramsController", function ($scope, $http, $rootScope, $location) {
 
     $scope.programs = $rootScope.programs;
     $http.get("http://localhost:8080/programs/getPrograms")
@@ -74,5 +74,8 @@ myApp.controller("ProgramsController", function ($scope, $http, $rootScope) {
             return "";
         }
     };
-
+    $scope.selectProgram = function(program){
+        $rootScope.currentProgram = program;
+        $location.url("/program");
+    };
 });

@@ -14,6 +14,13 @@ myApp.controller("ScholarshipsController", function ($scope, $http, $rootScope, 
         $scope.onlyWatched = false;
     };
     $scope.toggleRelevant = function () {
+        var min_bal = 4.50;
+        var mfor = "ака";
+        var data = JSON.stringify({minBal: min_bal, mentFor: mfor});
+        $http.get("http://localhost:8080/getScholarshipsByBalAndProgram?data=" + data)
+            .then(function(response){
+                $scope.scholarships = response.data;
+            });
         $scope.onlyRelevant = !$scope.onlyRelevant;
         $scope.onlyWatched = false;
     };
@@ -21,7 +28,8 @@ myApp.controller("ScholarshipsController", function ($scope, $http, $rootScope, 
        $scope.onlyWatched = !$scope.onlyWatched;
         $scope.onlyRelevant = false;
     };
-    $scope.selectScholarship = function () {
+    $scope.selectScholarship = function (scholarship) {
+        $rootScope.currentScholarship = scholarship;
         $location.url("/scholarship");
     };
 });
